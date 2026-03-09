@@ -1,0 +1,72 @@
+Plan du projet
+Recouvra+ (API de gestion du recouvrement)
+
+1. Cadrage et setup
+- Initialiser le projet Express (Node.js 22).
+- Configurer l'environnement (.env, connexion MongoDB).
+- Installer dependances: express, mongoose, jsonwebtoken, bcrypt, joi, swagger-jsdoc, swagger-ui-express, jest, supertest.
+- Mettre en place une architecture propre: src/config, src/models, src/controllers, src/services, src/routes, src/middlewares, src/validators, tests.
+
+2. Authentification et roles (JWT)
+- Modele User avec roles: agent, manager, admin.
+- Endpoints: POST /auth/register, POST /auth/login, GET /auth/me.
+- Middleware auth (verification JWT) + middleware authorize(roles).
+
+3. Gestion des clients
+- Modele Client (infos contact, statut, metadonnees).
+- Endpoints CRUD: POST /clients, GET /clients, GET /clients/:id, PUT /clients/:id, DELETE /clients/:id.
+- Validation Joi sur toutes les entrees.
+
+4. Gestion des factures impayees
+- Modele Invoice (client, montant, echeance, statut).
+- Statuts recommandes: unpaid, partial, paid, in_collection.
+- Endpoints CRUD + filtres (status, date, client).
+
+5. Paiements manuels
+- Modele Payment (invoice, montant, date, mode, note).
+- Endpoint: POST /payments.
+- Logique metier: mise a jour automatique du statut facture (partial ou paid).
+
+6. Actions de recouvrement
+- Modele CollectionAction (type d'action, agent, date, resultat, commentaire).
+- Types: call, email, visit, notice.
+- Endpoints: creation + historique par client/facture.
+
+7. Statistiques simples
+- Endpoints: /stats/overview, /stats/invoices, /stats/agents.
+- Exemples de KPI:
+  - total impaye
+  - montant recouvre
+  - taux de recouvrement
+  - nombre d'actions par agent
+  - top clients en retard
+
+8. Documentation Swagger
+- Documenter toutes les routes (auth, clients, factures, paiements, recouvrement, stats).
+- Exposer /docs.
+
+9. Tests unitaires de base
+- Tester au minimum:
+  - auth login/JWT
+  - validation Joi (cas invalide)
+  - creation facture
+  - enregistrement paiement et changement de statut facture
+  - acces protege par roles
+- Outils: Jest + Supertest.
+
+10. Qualite et livraison
+- Gestion d'erreurs centralisee (error middleware).
+- Reponses API coherentes (success, data, message, errors).
+- README propre (installation, scripts, endpoints, roles, variables env).
+- Git: commits reguliers par fonctionnalite.
+
+Planning conseille (10 jours)
+1. Jour 1: setup + architecture + DB.
+2. Jour 2: auth JWT + roles.
+3. Jour 3: module clients.
+4. Jour 4-5: module factures.
+5. Jour 6: paiements manuels.
+6. Jour 7: actions de recouvrement.
+7. Jour 8: statistiques.
+8. Jour 9: Swagger.
+9. Jour 10: tests + nettoyage + README final.
