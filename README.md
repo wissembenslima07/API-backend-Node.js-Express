@@ -1,12 +1,22 @@
 # Recouvra+ API
 
-Projet backend Node.js/Express pour la gestion du recouvrement: clients, factures impayees, paiements manuels et suivi des actions.
+API backend Node.js/Express pour la gestion du recouvrement: clients, factures impayees, paiements manuels, actions de recouvrement et statistiques.
 
-## Equipe
+## Auteur
 
-- Wissem ben slima
-- Houssem Amor
-- Montah Khdhiri
+Ce projet a ete realise **seul** par:
+
+- Wissem Ben Slima
+
+## Objectif du projet
+
+Fournir une API REST claire et securisee pour:
+
+- gerer les clients
+- suivre les factures impayees
+- enregistrer les paiements
+- tracer les actions de recouvrement
+- consulter des statistiques globales
 
 ## Stack technique
 
@@ -16,108 +26,81 @@ Projet backend Node.js/Express pour la gestion du recouvrement: clients, facture
 - JWT + bcrypt
 - Joi (validation)
 - Jest + Supertest
+- Swagger (documentation API)
 
-## Travail deja realise
+## Structure du projet
 
-Les modules suivants sont deja implementes dans ce repository:
+```text
+src/
+  config/        # Configuration (env, DB, Swagger)
+  controllers/   # Gestion des requetes HTTP
+  middlewares/   # Auth, gestion des erreurs
+  models/        # Modeles Mongoose
+  routes/        # Definition des routes API
+  services/      # Logique metier
+  validators/    # Validation Joi
+tests/           # Tests unitaires / integration
+```
 
-### 1) Cadrage et setup
+## Fonctionnalites implementees
 
-- Initialisation du projet Express
-- Structure propre mise en place:
-  - `src/config`
-  - `src/models`
-  - `src/controllers`
-  - `src/services`
-  - `src/routes`
-  - `src/middlewares`
-  - `src/validators`
-  - `tests`
-- Configuration environnement (`.env.example`)
-- Connexion MongoDB avec statut expose dans `GET /api/health`
-- Scripts npm (`dev`, `start`, `test`)
+### 1. Authentification et autorisation
 
-### 2) Authentification et roles
+- `POST /api/auth/register`
+- `POST /api/auth/login`
+- `GET /api/auth/me`
+- Roles utilisateurs: `agent`, `manager`, `admin`
+- Protection JWT + middleware d'autorisation par role
 
-- Modele `User` avec roles `agent`, `manager`, `admin`
-- Endpoints:
-  - `POST /api/auth/register`
-  - `POST /api/auth/login`
-  - `GET /api/auth/me`
-- Middleware `auth` (JWT)
-- Middleware `authorize(roles)`
+### 2. Gestion des clients
 
-### 3) Gestion des clients
+- `POST /api/clients`
+- `GET /api/clients`
+- `GET /api/clients/:id`
+- `PUT /api/clients/:id`
+- `DELETE /api/clients/:id`
 
-- Modele `Client`
-- CRUD complet:
-  - `POST /api/clients`
-  - `GET /api/clients`
-  - `GET /api/clients/:id`
-  - `PUT /api/clients/:id`
-  - `DELETE /api/clients/:id`
-- Validation Joi sur les entrees
+### 3. Gestion des factures
 
-### 4) Gestion des factures impayees
+- CRUD des factures
+- Filtres disponibles (statut, date, client)
+- Statuts supportes: `unpaid`, `partial`, `paid`, `in_collection`
 
-- Modele `Invoice`
-- Statuts: `unpaid`, `partial`, `paid`, `in_collection`
-- CRUD + filtres (`status`, `date`, `client`)
+### 4. Paiements manuels
 
-### 5) Paiements manuels
+- `POST /api/payments`
+- Mise a jour automatique du montant paye de la facture
+- Mise a jour automatique du statut (`partial` ou `paid`)
 
-- Modele `Payment`
-- Endpoint:
-  - `POST /api/payments`
-- Logique metier implementee:
-  - mise a jour automatique de `invoice.amountPaid`
-  - mise a jour automatique du statut facture (`partial` ou `paid`)
+### 5. Actions de recouvrement
 
-## Repartition du travail restant
+- `POST /api/collection-actions`
+- `GET /api/collection-actions/client/:clientId`
+- `GET /api/collection-actions/invoice/:invoiceId`
+- Types d'action: `call`, `email`, `visit`, `notice`
 
-Le reste du projet est reparti comme suit:
+### 6. Statistiques
 
-### Houssem Amor
+- `GET /api/stats/overview`
+- `GET /api/stats/invoices`
+- `GET /api/stats/agents`
 
-- Module 6: Actions de recouvrement (complet)
-  - Modele `CollectionAction`
-  - Types: `call`, `email`, `visit`, `notice`
-  - Endpoints: creation + historique par client/facture
-- Module 9: Tests unitaires de base (partie recouvrement + auth)
-- Module 10: Qualite finale (partie backend)
-  - Revue des routes
-  - Harmonisation des reponses API
-  - Nettoyage du code
+### 7. Documentation API
 
-### Montaha Khdhiri
+- Interface Swagger: `GET /docs`
+- Specification JSON: `GET /docs-json`
 
-- Module 7: Statistiques simples (complet)
-  - `GET /api/stats/overview`
-  - `GET /api/stats/invoices`
-  - `GET /api/stats/agents`
-- Module 8: Documentation Swagger (`/docs`) (complet)
-- Module 9: Tests unitaires de base (partie factures + paiements + stats)
-- Module 10: Livraison finale
-  - Mise a jour README final
-  - Verification finale de la documentation
+## Installation et execution
 
-## Etapes restantes
-
-- Module 6: Actions de recouvrement (Houssem Amor)
-- Module 7: Statistiques (Montaha Khdhiri)
-- Module 8: Swagger (Montaha Khdhiri)
-- Module 9: Tests unitaires de base complets (Houssem Amor + Montaha Khdhiri)
-- Module 10: Qualite finale + README final (Houssem Amor + Montaha Khdhiri)
-
-## Lancer le projet en local
-
-1. Installer les dependances:
+### 1. Installer les dependances
 
 ```bash
 npm install
 ```
 
-2. Creer un fichier `.env` (a partir de `.env.example`) avec au minimum:
+### 2. Configurer l'environnement
+
+Creer un fichier `.env` a partir de `.env.example`, puis definir au minimum:
 
 ```env
 NODE_ENV=development
@@ -126,28 +109,42 @@ MONGODB_URI=mongodb://127.0.0.1:27017/recouvra_plus
 JWT_SECRET=change_this_secret
 ```
 
-3. Demarrer MongoDB localement
+### 3. Demarrer MongoDB
 
-4. Lancer l'API:
+S'assurer que MongoDB est lance localement.
+
+### 4. Lancer le serveur
 
 ```bash
 npm run dev
 ```
 
-5. Tester l'etat API + DB:
+### 5. Verifier l'etat de l'API
 
-```bash
+Endpoint de sante:
+
+```http
 GET http://localhost:3000/api/health
 ```
 
+## Scripts npm utiles
+
+- `npm run dev` : demarrage en mode developpement
+- `npm start` : demarrage en mode production
+- `npm test` : execution des tests
+
 ## Tests
+
+Lancer tous les tests:
 
 ```bash
 npm test
 ```
 
-## Notes de collaboration Git
+## Qualite et bonnes pratiques
 
-- Travailler par branche: `feature/module-6`, `feature/module-7`, `feature/module-8`, etc.
-- Faire des commits courts, clairs et atomiques
-- Ouvrir des Pull Requests pour une validation croisee
+- Architecture par couches (routes -> controllers -> services -> models)
+- Validation des entrees avec Joi
+- Gestion centralisee des erreurs
+- Authentification JWT et controle des roles
+- Documentation Swagger pour faciliter l'integration

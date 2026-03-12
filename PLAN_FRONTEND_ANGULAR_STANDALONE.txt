@@ -1,0 +1,254 @@
+PLAN FRONTEND ANGULAR STANDALONE - PROJET RECOUVRA+
+
+OBJECTIF GLOBAL
+Construire un frontend Angular standalone connecte a l'API Recouvra+ avec:
+- Authentification JWT + gestion des roles (agent, manager, admin)
+- Modules metiers: clients, factures, paiements, actions de recouvrement, statistiques
+- Interface claire, reactive et securisee
+
+==================================================
+1) CADRAGE FONCTIONNEL
+==================================================
+1. Definir les ecrans principaux:
+   - Auth: login, profil utilisateur
+   - Dashboard: resume metrique + navigation rapide
+   - Clients: CRUD complet
+   - Factures: CRUD + filtres
+   - Paiements: creation paiement + historique
+   - Actions de recouvrement: creation + historique client/facture
+   - Statistiques: overview, invoices, agents
+
+2. Definir les permissions par role:
+   - agent: clients, factures, paiements, actions
+   - manager: tout agent + stats
+   - admin: acces complet
+
+3. Definir les parcours utilisateur:
+   - Login -> dashboard -> module metier -> action CRUD -> confirmation
+
+==================================================
+2) INITIALISATION PROJET ANGULAR STANDALONE
+==================================================
+1. Creation projet:
+   ng new recouvra-front --standalone --routing --style=scss
+
+2. Dependances recommandees:
+   - Angular Material (ou PrimeNG)
+   - RxJS (deja inclus)
+   - Optionnel: ngx-toastr (notifications)
+   - Optionnel: ng2-charts ou ApexCharts (stats)
+
+3. Environnements:
+   - environment.ts: apiBaseUrl=http://localhost:3000/api
+   - environment.prod.ts: url de production
+
+==================================================
+3) ARCHITECTURE DOSSIERS
+==================================================
+src/app/
+- core/
+  - auth/
+  - guards/
+  - interceptors/
+  - models/
+  - services/
+- shared/
+  - components/
+  - pipes/
+  - utils/
+- layout/
+  - app-shell/
+  - navbar/
+  - sidebar/
+- features/
+  - auth/
+  - dashboard/
+  - clients/
+  - invoices/
+  - payments/
+  - collection-actions/
+  - stats/
+
+==================================================
+4) ROUTING ET SECURITE
+==================================================
+1. Routes principales:
+   /login
+   /dashboard
+   /clients
+   /invoices
+   /payments
+   /collection-actions
+   /stats
+
+2. Guards:
+   - authGuard: bloque les routes privees sans token
+   - roleGuard: controle l'acces par role
+
+3. Lazy loading:
+   - Utiliser loadComponent/loadChildren par feature
+
+==================================================
+5) AUTHENTIFICATION (JWT)
+==================================================
+1. Login:
+   - POST /api/auth/login
+   - Stocker token + infos utilisateur
+
+2. Session:
+   - Recharger profil avec GET /api/auth/me au refresh
+
+3. Deconnexion:
+   - Supprimer token + rediriger /login
+
+4. Interceptors:
+   - api.interceptor: injecter Authorization Bearer <token>
+   - error.interceptor: gerer 401, 403 et erreurs API globales
+
+==================================================
+6) MODULES METIERS A IMPLEMENTER
+==================================================
+A) CLIENTS
+- Liste + recherche
+- Formulaire create/update
+- Detaill + suppression
+- Endpoints utilises:
+  POST /api/clients
+  GET /api/clients
+  GET /api/clients/:id
+  PUT /api/clients/:id
+  DELETE /api/clients/:id
+
+B) FACTURES
+- Liste avec filtres (status, date, client)
+- Formulaire create/update
+- Suppression
+- Endpoints utilises:
+  POST /api/invoices
+  GET /api/invoices
+  GET /api/invoices/:id
+  PUT /api/invoices/:id
+  DELETE /api/invoices/:id
+
+C) PAIEMENTS
+- Formulaire paiement manuel
+- Afficher historique lie aux factures
+- Endpoint utilise:
+  POST /api/payments
+
+D) ACTIONS DE RECOUVREMENT
+- Formulaire action: call/email/visit/notice
+- Historique par client et facture
+- Endpoints utilises:
+  POST /api/collection-actions
+  GET /api/collection-actions/client/:clientId
+  GET /api/collection-actions/invoice/:invoiceId
+
+E) STATISTIQUES
+- Dashboard manager/admin
+- Cartes + graphiques
+- Endpoints utilises:
+  GET /api/stats/overview
+  GET /api/stats/invoices
+  GET /api/stats/agents
+
+==================================================
+7) MODELES TYPESCRIPT
+==================================================
+Creer les interfaces:
+- User
+- Client
+- Invoice
+- Payment
+- CollectionAction
+- StatsOverview, StatsInvoices, StatsAgents
+
+Standardiser la reponse API:
+- success: boolean
+- data: any
+- message: string
+- errors?: string[]
+
+==================================================
+8) FORMULAIRES ET VALIDATION
+==================================================
+1. Utiliser Reactive Forms
+2. Aligner les regles avec Joi backend
+3. Afficher erreurs champ par champ
+4. Verifier regles metier:
+   - paiement <= montant restant
+   - dates coherentes
+
+==================================================
+9) UI/UX
+==================================================
+1. Layout global: sidebar + topbar + contenu
+2. Etats UI:
+   - loading
+   - empty state
+   - error state
+   - success notification
+3. Accessibilite:
+   - labels explicites
+   - navigation clavier
+   - contraste suffisant
+
+==================================================
+10) GESTION D'ETAT
+==================================================
+Phase 1:
+- Services + BehaviorSubject par module
+
+Phase 2 (si besoin):
+- Migrer vers NgRx pour etat complexe
+
+==================================================
+11) TESTS FRONTEND
+==================================================
+1. Unit tests:
+   - services HTTP
+   - guards
+   - interceptors
+2. Component tests:
+   - formulaires
+   - validations
+3. E2E (optionnel):
+   - login -> CRUD client -> paiement
+
+==================================================
+12) DEPLOIEMENT
+==================================================
+1. Build production:
+   ng build --configuration production
+
+2. Serveur web:
+- Config fallback SPA (index.html)
+
+3. Verifications:
+- Toutes routes protegees
+- App connectee a l'API prod
+- README frontend a jour
+
+==================================================
+ROADMAP SPRINTS (RECOMMANDEE)
+==================================================
+Sprint 1:
+- Setup Angular + layout + auth + guards + interceptors
+
+Sprint 2:
+- Module clients + module factures
+
+Sprint 3:
+- Module paiements + actions de recouvrement
+
+Sprint 4:
+- Module stats + tests + optimisation + livraison
+
+==================================================
+LIVRABLES FINAUX
+==================================================
+- Frontend Angular standalone fonctionnel
+- Gestion JWT/roles complete
+- Ecrans metiers operationnels
+- Tests de base
+- Documentation d'installation et usage
