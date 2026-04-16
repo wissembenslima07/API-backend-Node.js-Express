@@ -60,7 +60,7 @@ Recouvra+ (API de gestion du recouvrement)
 - README propre (installation, scripts, endpoints, roles, variables env).
 - Git: commits reguliers par fonctionnalite.
 
-Planning conseille (10 jours)
+Planning  (10 jours)
 1. Jour 1: setup + architecture + DB.
 2. Jour 2: auth JWT + roles.
 3. Jour 3: module clients.

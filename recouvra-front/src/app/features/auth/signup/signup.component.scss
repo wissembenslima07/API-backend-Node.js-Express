@@ -1,0 +1,61 @@
+// Signup Component Specific Styles
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.bg-gradient-signature {
+  background: linear-gradient(135deg, #005bad 0%, #0074d9 100%);
+}
+
+// Smooth transitions on form elements
+input {
+  transition: all 200ms ease-in-out;
+
+  &:focus {
+    box-shadow: 0 0 0 4px rgba(0, 91, 173, 0.1);
+  }
+}
+
+// Button animations
+button[type='submit'] {
+  transition: all 200ms ease-in-out;
+
+  &:hover {
+    opacity: 0.9;
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+// Social button hover effects
+button[type='button'] {
+  transition: background-color 200ms ease-in-out;
+
+  &:hover {
+    background-color: hsl(from #edeeef l c h / 0.9);
+  }
+}
+
+// Password visibility toggle
+.material-symbols-outlined {
+  user-select: none;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  div {
+    &.w-full.max-w-md {
+      width: 100%;
+      margin: 0 auto;
+    }
+  }
+}

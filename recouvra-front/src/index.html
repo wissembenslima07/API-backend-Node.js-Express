@@ -1,0 +1,101 @@
+<!doctype html>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Payment Tracking System</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  
+  <!-- Tailwind Configuration -->
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "inverse-surface": "#2e3132",
+            "surface": "#f8f9fa",
+            "on-primary-fixed": "#001b3b",
+            "on-secondary-fixed-variant": "#214291",
+            "surface-container": "#edeeef",
+            "on-background": "#191c1d",
+            "on-surface": "#191c1d",
+            "inverse-on-surface": "#f0f1f2",
+            "on-tertiary-container": "#fffbff",
+            "secondary-container": "#8ca8fe",
+            "tertiary-fixed-dim": "#ffb68e",
+            "surface-dim": "#d9dadb",
+            "primary": "#005bad",
+            "error-container": "#ffdad6",
+            "surface-container-lowest": "#ffffff",
+            "on-surface-variant": "#414753",
+            "surface-tint": "#005eb2",
+            "on-tertiary": "#ffffff",
+            "surface-container-highest": "#e1e3e4",
+            "outline-variant": "#c1c6d5",
+            "on-secondary-container": "#173a89",
+            "on-primary-fixed-variant": "#004788",
+            "secondary-fixed": "#dbe1ff",
+            "background": "#f8f9fa",
+            "surface-container-high": "#e7e8e9",
+            "on-error": "#ffffff",
+            "inverse-primary": "#a7c8ff",
+            "primary-container": "#0074d9",
+            "on-tertiary-fixed": "#331200",
+            "on-primary": "#ffffff",
+            "on-primary-container": "#fdfbff",
+            "on-tertiary-fixed-variant": "#763300",
+            "surface-variant": "#e1e3e4",
+            "tertiary-container": "#be5600",
+            "outline": "#717784",
+            "primary-fixed-dim": "#a7c8ff",
+            "secondary": "#3d5aaa",
+            "tertiary-fixed": "#ffdbc9",
+            "error": "#ba1a1a",
+            "primary-fixed": "#d5e3ff",
+            "on-secondary": "#ffffff",
+            "tertiary": "#974300",
+            "on-secondary-fixed": "#00174a",
+            "on-error-container": "#93000a",
+            "surface-container-low": "#f3f4f5",
+            "secondary-fixed-dim": "#b4c5ff",
+            "surface-bright": "#f8f9fa"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "fontFamily": {
+            "headline": ["Manrope"],
+            "body": ["Manrope"],
+            "label": ["Manrope"]
+          }
+        },
+      },
+    }
+  </script>
+  
+  <style>
+    body { 
+      font-family: 'Manrope', sans-serif;
+      min-height: max(884px, 100dvh);
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen flex flex-col overflow-x-hidden">
+  <app-root></app-root>
+</body>
+</html>

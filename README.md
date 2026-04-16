@@ -4,7 +4,7 @@ API backend Node.js/Express pour la gestion du recouvrement: clients, factures i
 
 ## Auteur
 
-Ce projet a ete realise **seul** par:
+Ce projet a ete realise  par:
 
 - Wissem Ben Slima
 

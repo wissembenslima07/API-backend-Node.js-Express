@@ -1,0 +1,53 @@
+// Login Component Specific Styles
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+}
+
+.login-gradient {
+  background: linear-gradient(135deg, #005bad 0%, #0074d9 100%);
+}
+
+// Smooth transitions on form elements
+input {
+  transition: all 200ms ease-in-out;
+
+  &:focus {
+    box-shadow: 0 0 0 4px rgba(0, 91, 173, 0.1);
+  }
+}
+
+// Button animations
+button[type='submit'] {
+  transition: all 200ms ease-in-out;
+
+  &:hover {
+    transform: scale(1.02);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+// Social button hover effects
+button[type='button'] {
+  transition: background-color 200ms ease-in-out;
+
+  &:hover {
+    opacity: 0.85;
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  section {
+    margin: 0 auto;
+    width: 100%;
+  }
+}

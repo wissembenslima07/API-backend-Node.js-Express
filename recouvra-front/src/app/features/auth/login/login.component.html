@@ -1,0 +1,139 @@
+<main class="flex-grow flex items-center justify-center p-6 login-gradient relative">
+  <!-- Background Architectural Elements -->
+  <div class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none overflow-hidden">
+    <div class="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-surface-container-lowest blur-3xl"></div>
+    <div class="absolute bottom-1/4 right-0 w-64 h-64 rounded-xl bg-primary-container rotate-12 blur-2xl"></div>
+  </div>
+
+  <!-- Central Login Card -->
+  <section class="relative w-full max-w-[480px] bg-surface-container-lowest rounded-xl shadow-2xl p-8 md:p-12 z-10">
+    <div class="flex flex-col items-center mb-10">
+      <div class="mb-6 flex items-center justify-center w-16 h-16 rounded-full bg-primary-fixed">
+        <span class="material-symbols-outlined text-primary text-3xl" data-icon="architecture">architecture</span>
+      </div>
+      <h1 class="font-headline text-3xl font-extrabold tracking-tight text-on-surface mb-2">Payment Tracking System</h1>
+      <p class="font-body text-on-surface-variant text-center leading-relaxed">
+        Please sign in to access your professional workspace.
+      </p>
+    </div>
+
+    <form (ngSubmit)="onSubmit()" class="space-y-6">
+      <!-- Email Field -->
+      <div class="space-y-2">
+        <label class="font-label text-sm font-semibold text-on-surface-variant px-1" for="email">Email Address</label>
+        <div class="relative">
+          <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline" data-icon="mail">
+            mail
+          </span>
+          <input
+            class="w-full pl-12 pr-4 py-3.5 bg-surface-container-low border border-outline-variant/40 rounded-lg focus:ring-4 focus:ring-primary-fixed focus:border-primary transition-all duration-200 outline-none placeholder:text-outline/60"
+            id="email"
+            placeholder="name@company.com"
+            type="email"
+            [(ngModel)]="email"
+            name="email"
+            required
+          />
+        </div>
+      </div>
+
+      <!-- Password Field -->
+      <div class="space-y-2">
+        <div class="flex justify-between items-center px-1">
+          <label class="font-label text-sm font-semibold text-on-surface-variant" for="password">Password</label>
+          <a class="text-xs font-bold text-primary hover:opacity-80 transition-opacity" href="#"
+            >Forgot password?</a
+          >
+        </div>
+        <div class="relative">
+          <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline" data-icon="lock">
+            lock
+          </span>
+          <input
+            class="w-full pl-12 pr-4 py-3.5 bg-surface-container-low border border-outline-variant/40 rounded-lg focus:ring-4 focus:ring-primary-fixed focus:border-primary transition-all duration-200 outline-none placeholder:text-outline/60"
+            id="password"
+            placeholder="••••••••"
+            type="password"
+            [(ngModel)]="password"
+            name="password"
+            required
+          />
+        </div>
+      </div>
+
+      <p *ngIf="errorMessage" class="rounded-lg bg-error-container px-4 py-3 text-sm text-on-error-container">
+        {{ errorMessage }}
+      </p>
+
+      <!-- Action Button -->
+      <button
+        class="w-full login-gradient text-on-primary font-bold py-4 rounded-full shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 mt-4"
+        type="submit"
+        [disabled]="isSubmitting"
+      >
+        {{ isSubmitting ? 'Connexion...' : 'Login' }}
+      </button>
+    </form>
+
+    <!-- Social Separator -->
+    <div class="relative my-10 flex items-center">
+      <div class="flex-grow border-t border-outline-variant/30"></div>
+      <span class="flex-shrink mx-4 font-label text-xs uppercase tracking-widest text-outline">Or continue with</span>
+      <div class="flex-grow border-t border-outline-variant/30"></div>
+    </div>
+
+    <!-- Social Login Buttons -->
+    <div class="grid grid-cols-2 gap-4">
+      <button
+        (click)="googleLogin()"
+        class="flex items-center justify-center gap-3 py-3 px-4 bg-surface-container-low hover:bg-surface-container-high rounded-lg transition-colors duration-200 border border-outline-variant/20"
+        type="button"
+      >
+        <img
+          alt="Google Logo"
+          class="w-5 h-5"
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6NU5r8RrdQnIAYu8QAK3Kxrm1HJG5faIGGzuEByng66ee2cZxSGJBijMMdtIyofmUOxN0hPVaQwtYpeHdyMVDqIuwlCt143YuiXAm9Mofm7UkrWbW3ipivBjQf2CZOdJOi4iiR2eq1y2-rvILjoNkVTL7itmsxHZjrusLVL20zdVu17qpr85AMhtC9agvm1IbuzDLIUdKyKwekA7Hw5AeisaGUr4hJe43Isl6dc4TTnBx8dFNnw5ikmx0HhI2w0PpgHjGuAozMK0"
+        />
+        <span class="font-bold text-sm text-on-surface-variant">Google</span>
+      </button>
+      <button
+        (click)="facebookLogin()"
+        class="flex items-center justify-center gap-3 py-3 px-4 bg-surface-container-low hover:bg-surface-container-high rounded-lg transition-colors duration-200 border border-outline-variant/20"
+        type="button"
+      >
+        <svg class="w-5 h-5 text-[#1877F2] fill-current" viewBox="0 0 24 24">
+          <path
+            d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
+          ></path>
+        </svg>
+        <span class="font-bold text-sm text-on-surface-variant">Facebook</span>
+      </button>
+    </div>
+
+    <!-- Signup Link -->
+    <div class="mt-10 text-center">
+      <p class="font-body text-sm text-on-surface-variant">
+        Don't have an account?
+        <a class="text-primary font-extrabold hover:underline ml-1" routerLink="/signup">Signup</a>
+      </p>
+    </div>
+  </section>
+</main>
+
+<!-- Footer -->
+<footer class="w-full py-8 px-6 flex flex-col md:flex-row justify-between items-center gap-4 mt-auto bg-[#f8f9fa] dark:bg-[#191c1d]">
+  <div class="font-['Manrope'] text-[0.75rem] label-md text-[#191c1d]/50 dark:text-[#ffffff]/50">
+    © 2026 Recouvra+. Built by Wissem Ben Slima.
+  </div>
+  <div class="flex gap-6">
+    <a class="font-['Manrope'] text-[0.75rem] label-md text-[#191c1d]/50 dark:text-[#ffffff]/50 hover:text-[#005bad] dark:hover:text-[#0074d9] transition-colors duration-200" href="#"
+      >Privacy Policy</a
+    >
+    <a class="font-['Manrope'] text-[0.75rem] label-md text-[#191c1d]/50 dark:text-[#ffffff]/50 hover:text-[#005bad] dark:hover:text-[#0074d9] transition-colors duration-200" href="#"
+      >Terms of Service</a
+    >
+    <a class="font-['Manrope'] text-[0.75rem] label-md text-[#191c1d]/50 dark:text-[#ffffff]/50 hover:text-[#005bad] dark:hover:text-[#0074d9] transition-colors duration-200" href="#"
+      >Help Center</a
+    >
+  </div>
+</footer>

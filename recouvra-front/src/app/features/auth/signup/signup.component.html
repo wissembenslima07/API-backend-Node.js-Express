@@ -1,0 +1,167 @@
+<div class="bg-primary-container min-h-screen flex flex-col">
+  <!-- Header -->
+  <header class="w-full px-6 py-8 max-w-screen-xl mx-auto flex justify-center md:justify-start">
+    <div class="text-2xl font-black text-on-primary-container tracking-tight">Payment Tracking System</div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-grow flex items-center justify-center px-4 py-12">
+    <div class="w-full max-w-md bg-surface-container-lowest rounded-xl p-8 md:p-12 shadow-2xl relative overflow-hidden">
+      <!-- Subtle Asymmetric Accent -->
+      <div class="absolute -top-12 -right-12 w-32 h-32 bg-secondary-fixed opacity-20 rounded-full blur-3xl"></div>
+
+      <div class="relative z-10">
+        <div class="mb-10">
+          <h1 class="font-headline text-on-surface text-3xl font-extrabold tracking-tight mb-2">Create Account</h1>
+          <p class="text-on-surface-variant text-sm font-medium">Join our curated architectural community.</p>
+        </div>
+
+        <form (ngSubmit)="onSubmit()" class="space-y-6">
+          <div class="space-y-2">
+            <label class="block text-xs font-bold uppercase tracking-wider text-outline px-1" for="fullName">
+              Full name
+            </label>
+            <input
+              class="w-full px-4 py-3.5 rounded-lg bg-surface-container-low border border-outline-variant/40 focus:border-primary focus:ring-4 focus:ring-primary-fixed outline-none transition-all text-on-surface placeholder:text-outline/60"
+              id="fullName"
+              placeholder="Wissem Ben Slima"
+              type="text"
+              [(ngModel)]="fullName"
+              name="fullName"
+              required
+            />
+          </div>
+
+          <!-- Email Field -->
+          <div class="space-y-2">
+            <label class="block text-xs font-bold uppercase tracking-wider text-outline px-1" for="email">Email</label>
+            <input
+              class="w-full px-4 py-3.5 rounded-lg bg-surface-container-low border border-outline-variant/40 focus:border-primary focus:ring-4 focus:ring-primary-fixed outline-none transition-all text-on-surface placeholder:text-outline/60"
+              id="email"
+              placeholder="architect@canvas.com"
+              type="email"
+              [(ngModel)]="email"
+              name="email"
+              required
+            />
+          </div>
+
+          <!-- Password Field -->
+          <div class="space-y-2">
+            <label class="block text-xs font-bold uppercase tracking-wider text-outline px-1" for="password">
+              Create password
+            </label>
+            <div class="relative">
+              <input
+                class="w-full px-4 py-3.5 rounded-lg bg-surface-container-low border border-outline-variant/40 focus:border-primary focus:ring-4 focus:ring-primary-fixed outline-none transition-all text-on-surface placeholder:text-outline/60"
+                id="password"
+                placeholder="••••••••"
+                [type]="showPassword ? 'text' : 'password'"
+                [(ngModel)]="password"
+                name="password"
+                required
+              />
+              <span
+                (click)="togglePasswordVisibility()"
+                class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-outline/60 cursor-pointer hover:text-primary transition-colors"
+              >
+                {{ showPassword ? 'visibility_off' : 'visibility' }}
+              </span>
+            </div>
+          </div>
+
+          <!-- Confirm Password Field -->
+          <div class="space-y-2">
+            <label class="block text-xs font-bold uppercase tracking-wider text-outline px-1" for="confirmPassword">
+              Confirm password
+            </label>
+            <input
+              class="w-full px-4 py-3.5 rounded-lg bg-surface-container-low border border-outline-variant/40 focus:border-primary focus:ring-4 focus:ring-primary-fixed outline-none transition-all text-on-surface placeholder:text-outline/60"
+              id="confirmPassword"
+              placeholder="••••••••"
+              type="password"
+              [(ngModel)]="confirmPassword"
+              name="confirmPassword"
+              required
+            />
+          </div>
+
+          <p *ngIf="errorMessage" class="rounded-lg bg-error-container px-4 py-3 text-sm text-on-error-container">
+            {{ errorMessage }}
+          </p>
+
+          <!-- Submit Button -->
+          <button
+            class="w-full bg-gradient-signature text-on-primary py-4 rounded-full font-bold text-lg shadow-lg hover:opacity-90 transform active:scale-95 transition-all duration-200 mt-4"
+            type="submit"
+            [disabled]="isSubmitting"
+          >
+            {{ isSubmitting ? 'Inscription...' : 'Signup' }}
+          </button>
+        </form>
+
+        <!-- Social Separator -->
+        <div class="relative my-10">
+          <div class="absolute inset-0 flex items-center">
+            <div class="w-full border-t border-outline-variant/20"></div>
+          </div>
+          <div class="relative flex justify-center text-xs uppercase tracking-widest font-bold">
+            <span class="bg-surface-container-lowest px-4 text-outline/60">Or continue with</span>
+          </div>
+        </div>
+
+        <!-- Social Login Buttons -->
+        <div class="grid grid-cols-2 gap-4">
+          <button
+            (click)="googleSignup()"
+            class="flex items-center justify-center gap-3 px-4 py-3.5 rounded-lg bg-surface-container-high text-on-surface font-semibold hover:bg-surface-variant transition-colors border border-transparent"
+            type="button"
+          >
+            <img
+              alt="Google"
+              class="w-5 h-5"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwJ2beiwoVx8nFmeblasCHlj2xjpJJ1DGhI4kwRBQo8-gfMcb6SavUF3WamTQudHq8q_pgc1-iif72r-_FnK24S6x5BSzd1RyXPboSiymDkOVR_wwX3ahxeNAERJziixw-brJzOMSsCDak6byNSYhwogQ2n9-wNOjqoVF_ZgSHOgzcxLGOfQy9-5c6Z_L92BpyhQTVNcLRcNLVoO3eX89St4k04wgnxYT_NPYNoKvv4Dysf6esAmF7ST1Z8xjDyX55x0NrauX99oo"
+            />
+            <span>Google</span>
+          </button>
+          <button
+            (click)="facebookSignup()"
+            class="flex items-center justify-center gap-3 px-4 py-3.5 rounded-lg bg-surface-container-high text-on-surface font-semibold hover:bg-surface-variant transition-colors border border-transparent"
+            type="button"
+          >
+            <img
+              alt="Facebook"
+              class="w-5 h-5"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSgX4t74QA5ZNxx_PIWVE8cPFx5-y3B8KszOn4SYAaR5HlGkwYf55aihyuT5x7tohr__-v6w88U6cOzu4tV_T87bM7NCifGajKUC_88HnBK0HXnxqcUTW0Jfbr5RUqB-MWsjVhNH2E68U30ba3KB2mAYyR73ty6B5k90WOwsTIxYDarrptak5JrEAodfukwcekgnoIc1hTK6vVmP6vYqgwK4E66BjI-WKHPJ9t1R3OkH4so0sBIxZd0futsWHGgtyDPvwp6Se4wrA"
+            />
+            <span>Facebook</span>
+          </button>
+        </div>
+
+        <!-- Login Link -->
+        <div class="mt-10 text-center">
+          <p class="text-on-surface-variant font-medium">
+            Already have an account?
+            <a class="text-primary font-extrabold hover:underline transition-all" routerLink="/login">Login</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="w-full py-8 px-6 flex flex-col md:flex-row justify-between items-center gap-4 bg-transparent mt-auto">
+    <div class="text-xs font-['Manrope'] text-on-primary-container/70">© 2026 Recouvra+. Built by Wissem Ben Slima.</div>
+    <div class="flex gap-6">
+      <a class="text-xs font-['Manrope'] text-on-primary-container/70 hover:text-on-primary-container transition-colors" href="#"
+        >Privacy Policy</a
+      >
+      <a class="text-xs font-['Manrope'] text-on-primary-container/70 hover:text-on-primary-container transition-colors" href="#"
+        >Terms of Service</a
+      >
+      <a class="text-xs font-['Manrope'] text-on-primary-container/70 hover:text-on-primary-container transition-colors" href="#"
+        >Help Center</a
+      >
+    </div>
+  </footer>
+</div>
