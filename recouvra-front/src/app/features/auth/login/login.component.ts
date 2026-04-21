@@ -47,8 +47,7 @@ export class LoginComponent {
   }
 
   googleLogin(): void {
-    // Logique Google OAuth à implémenter
-    console.log('Google login');
+    window.location.href = this.authService.getGoogleLoginUrl();
   }
 
   facebookLogin(): void {

@@ -1,5 +1,7 @@
 const { validateRegister, validateLogin } = require("../validators/auth.validator");
 const { registerUser, loginUser, findUserById } = require("../services/auth.service");
+const env = require("../config/env");
+const { passport, googleAuthEnabled } = require("../config/passport");
 
 function formatJoiError(error) {
   return error.details.map((detail) => detail.message);
@@ -61,8 +63,54 @@ async function me(req, res, next) {
   }
 }
 
+function startGoogleAuth(req, res, next) {
+  if (!googleAuthEnabled) {
+    return res.status(503).json({
+      success: false,
+      message: "Google authentication is not configured",
+    });
+  }
+
+  return passport.authenticate("google", {
+    scope: ["profile", "email"],
+    session: false,
+    state: true,
+  })(req, res, next);
+}
+
+function googleAuthCallback(req, res, next) {
+  if (!googleAuthEnabled) {
+    return res.status(503).json({
+      success: false,
+      message: "Google authentication is not configured",
+    });
+  }
+
+  const frontendBaseUrl = env.frontendUrl.replace(/\/+$/, "");
+
+  return passport.authenticate("google", { session: false }, (error, authPayload) => {
+    if (error) {
+      return next(error);
+    }
+
+    if (!authPayload) {
+      return res.redirect(`${frontendBaseUrl}/login?oauth=failed`);
+    }
+
+    // Fragment strategy keeps OAuth payload out of server logs and referrer headers.
+    const fragment = new URLSearchParams({
+      token: authPayload.token,
+      user: JSON.stringify(authPayload.user),
+    }).toString();
+
+    return res.redirect(`${frontendBaseUrl}/oauth/callback#${fragment}`);
+  })(req, res, next);
+}
+
 module.exports = {
   register,
   login,
   me,
+  startGoogleAuth,
+  googleAuthCallback,
 };

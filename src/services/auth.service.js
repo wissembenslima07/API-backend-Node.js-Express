@@ -27,6 +27,13 @@ function signAccessToken(userDocument) {
   );
 }
 
+function createAuthPayload(userDocument) {
+  return {
+    token: signAccessToken(userDocument),
+    user: sanitizeUser(userDocument),
+  };
+}
+
 async function registerUser(payload) {
   const existingUser = await User.findOne({ email: payload.email.toLowerCase() });
   if (existingUser) {
@@ -41,19 +48,23 @@ async function registerUser(payload) {
     fullName: payload.fullName,
     email: payload.email.toLowerCase(),
     passwordHash,
+    authProvider: "local",
     role: payload.role || "agent",
   });
 
-  return {
-    token: signAccessToken(user),
-    user: sanitizeUser(user),
-  };
+  return createAuthPayload(user);
 }
 
 async function loginUser(payload) {
   const user = await User.findOne({ email: payload.email.toLowerCase() });
   if (!user) {
     const error = new Error("Invalid email or password");
+    error.statusCode = 401;
+    throw error;
+  }
+
+  if (!user.passwordHash) {
+    const error = new Error("This account uses social login");
     error.statusCode = 401;
     throw error;
   }
@@ -71,10 +82,7 @@ async function loginUser(payload) {
     throw error;
   }
 
-  return {
-    token: signAccessToken(user),
-    user: sanitizeUser(user),
-  };
+  return createAuthPayload(user);
 }
 
 async function findUserById(userId) {
@@ -88,8 +96,64 @@ async function findUserById(userId) {
   return sanitizeUser(user);
 }
 
+function buildGoogleProfilePayload(profile) {
+  const primaryEmail = profile.emails && profile.emails.length > 0 ? profile.emails[0].value : null;
+
+  if (!primaryEmail) {
+    const error = new Error("Google account email not available");
+    error.statusCode = 400;
+    throw error;
+  }
+
+  const normalizedFullName =
+    profile.displayName ||
+    [profile.name?.givenName, profile.name?.familyName].filter(Boolean).join(" ").trim() ||
+    primaryEmail;
+
+  return {
+    googleId: profile.id,
+    email: primaryEmail.toLowerCase(),
+    fullName: normalizedFullName,
+  };
+}
+
+async function upsertGoogleUser(payload) {
+  const user = await User.findOne({
+    $or: [{ googleId: payload.googleId }, { email: payload.email }],
+  });
+
+  if (!user) {
+    return User.create({
+      fullName: payload.fullName,
+      email: payload.email,
+      authProvider: "google",
+      googleId: payload.googleId,
+      role: "agent",
+      passwordHash: null,
+    });
+  }
+
+  if (!user.isActive) {
+    const error = new Error("User is inactive");
+    error.statusCode = 403;
+    throw error;
+  }
+
+  user.authProvider = "google";
+  user.googleId = user.googleId || payload.googleId;
+  if (!user.fullName) {
+    user.fullName = payload.fullName;
+  }
+
+  await user.save();
+  return user;
+}
+
 module.exports = {
   registerUser,
   loginUser,
   findUserById,
+  createAuthPayload,
+  buildGoogleProfilePayload,
+  upsertGoogleUser,
 };

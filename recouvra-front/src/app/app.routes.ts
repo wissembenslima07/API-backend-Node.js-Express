@@ -2,10 +2,15 @@ import { Routes } from '@angular/router';
 import { LoginComponent } from './features/auth/login/login.component';
 import { SignupComponent } from './features/auth/signup/signup.component';
 import { DashboardComponent } from './features/dashboard/dashboard.component';
+import { OauthCallbackComponent } from './features/auth/oauth-callback/oauth-callback.component';
 import { authGuard } from './core/guards/auth.guard';
 import { guestGuard } from './core/guards/guest.guard';
 
 export const routes: Routes = [
+  {
+    path: 'oauth/callback',
+    component: OauthCallbackComponent
+  },
   {
     path: 'login',
     component: LoginComponent,

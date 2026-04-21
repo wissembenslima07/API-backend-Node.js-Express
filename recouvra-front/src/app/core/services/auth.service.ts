@@ -22,6 +22,14 @@ export class AuthService {
       .pipe(tap((response) => this.persistSession(response.data)), map((response) => response.data.user));
   }
 
+  getGoogleLoginUrl(): string {
+    return `${this.apiUrl}/google`;
+  }
+
+  completeOAuthSession(token: string, user: AuthUser): void {
+    this.persistSession({ token, user });
+  }
+
   register(payload: RegisterRequest): Observable<AuthUser> {
     return this.http
       .post<ApiResponse<AuthResult>>(`${this.apiUrl}/register`, payload)
