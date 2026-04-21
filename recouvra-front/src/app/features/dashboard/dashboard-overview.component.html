@@ -1,0 +1,136 @@
+<section>
+  <div class="mb-10">
+    <h2 class="text-3xl font-bold">Dashboard</h2>
+    <p class="mt-1 text-sm text-on-secondary-container">Vue globale du recouvrement et des factures.</p>
+  </div>
+
+  <div *ngIf="isLoadingStats" class="mb-6 rounded-lg border border-slate-200 bg-white p-4 text-sm text-slate-600">
+    Chargement des statistiques en cours...
+  </div>
+
+  <div *ngIf="!isLoadingStats && statsErrorMessage" class="mb-6 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+    {{ statsErrorMessage }}
+  </div>
+
+  <div class="mb-10 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4">
+    <div class="rounded-xl border border-slate-100 bg-white p-5 shadow-[0px_4px_6px_rgba(0,0,0,0.05)] transition-all hover:-translate-y-1">
+      <div class="mb-4 flex items-start justify-between">
+        <span class="text-xs font-medium uppercase tracking-wider text-slate-500">Total Clients</span>
+        <div class="rounded-lg bg-slate-50 p-2"><span class="material-symbols-outlined text-slate-600">person</span></div>
+      </div>
+      <div class="flex items-end gap-3">
+        <span class="text-2xl font-bold">{{ overviewStats.totalClients | number }}</span>
+      </div>
+      <p class="mt-2 text-xs text-slate-400">Enregistrement global des clients.</p>
+    </div>
+
+    <div class="rounded-xl border border-slate-100 bg-white p-5 shadow-[0px_4px_6px_rgba(0,0,0,0.05)] transition-all hover:-translate-y-1">
+      <div class="mb-4 flex items-start justify-between">
+        <span class="text-xs font-medium uppercase tracking-wider text-slate-500">Total Factures</span>
+        <div class="rounded-lg bg-slate-50 p-2"><span class="material-symbols-outlined text-slate-600">business</span></div>
+      </div>
+      <div class="flex items-end gap-3">
+        <span class="text-2xl font-bold">{{ overviewStats.totalInvoices | number }}</span>
+      </div>
+      <p class="mt-2 text-xs text-slate-400">Nombre de factures suivies.</p>
+    </div>
+
+    <div class="rounded-xl border border-slate-100 bg-white p-5 shadow-[0px_4px_6px_rgba(0,0,0,0.05)] transition-all hover:-translate-y-1">
+      <div class="mb-4 flex items-start justify-between">
+        <span class="text-xs font-medium uppercase tracking-wider text-slate-500">Total Impaye</span>
+        <div class="rounded-lg bg-slate-50 p-2"><span class="material-symbols-outlined text-slate-600">handshake</span></div>
+      </div>
+      <div class="flex items-end gap-3">
+        <span class="text-2xl font-bold">{{ overviewStats.totalImpaye | number: '1.0-2' }}</span>
+      </div>
+      <p class="mt-2 text-xs text-slate-400">Montant restant a recouvrer.</p>
+    </div>
+
+    <div class="rounded-xl border border-slate-100 bg-white p-5 shadow-[0px_4px_6px_rgba(0,0,0,0.05)] transition-all hover:-translate-y-1">
+      <div class="mb-4 flex items-start justify-between">
+        <span class="text-xs font-medium uppercase tracking-wider text-slate-500">Montant Recouvre</span>
+        <div class="rounded-lg bg-green-50 p-2"><span class="material-symbols-outlined text-green-700">payments</span></div>
+      </div>
+      <div class="flex items-end gap-3">
+        <span class="text-2xl font-bold">{{ overviewStats.montantRecouvre | number: '1.0-2' }}</span>
+        <span class="mb-1 flex items-center text-xs font-bold text-green-600">{{ overviewStats.tauxRecouvrement | number: '1.0-2' }}%</span>
+      </div>
+      <p class="mt-2 text-xs text-slate-400">Taux global de recouvrement.</p>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-12 gap-5">
+    <div class="col-span-12 overflow-hidden rounded-xl border border-slate-100 bg-white shadow-[0px_4px_6px_rgba(0,0,0,0.05)] lg:col-span-8">
+      <div class="flex items-center justify-between border-b border-slate-50 p-6">
+        <div>
+          <h3 class="text-xl font-semibold">Revenue Trend</h3>
+          <p class="mt-0.5 text-xs text-slate-500">Total revenue growth over the last 6 months</p>
+        </div>
+        <div class="flex gap-2">
+          <button class="rounded-md bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600" type="button">6 Months</button>
+          <button class="rounded-md px-3 py-1 text-xs font-medium text-slate-500 hover:bg-slate-50" type="button">1 Year</button>
+        </div>
+      </div>
+      <div class="chart-grid relative h-80 p-8">
+        <svg class="h-full w-full overflow-visible" viewBox="0 0 800 240">
+          <defs>
+            <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#006b2e" stop-opacity="0.1"></stop>
+              <stop offset="100%" stop-color="#006b2e" stop-opacity="0"></stop>
+            </linearGradient>
+          </defs>
+          <path d="M0 200 L160 160 L320 180 L480 80 L640 100 L800 40 L800 240 L0 240 Z" fill="url(#chartGradient)"></path>
+          <path d="M0 200 L160 160 L320 180 L480 80 L640 100 L800 40" fill="none" stroke="#006b2e" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path>
+          <circle cx="0" cy="200" r="5" fill="white" stroke="#006b2e" stroke-width="2"></circle>
+          <circle cx="160" cy="160" r="5" fill="white" stroke="#006b2e" stroke-width="2"></circle>
+          <circle cx="320" cy="180" r="5" fill="white" stroke="#006b2e" stroke-width="2"></circle>
+          <circle cx="480" cy="80" r="5" fill="white" stroke="#006b2e" stroke-width="2"></circle>
+          <circle cx="640" cy="100" r="5" fill="white" stroke="#006b2e" stroke-width="2"></circle>
+          <circle cx="800" cy="40" r="5" fill="white" stroke="#006b2e" stroke-width="2"></circle>
+        </svg>
+        <div class="absolute bottom-4 left-8 right-8 flex justify-between text-[10px] font-bold uppercase tracking-wider text-slate-400">
+          <span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-span-12 space-y-5 lg:col-span-4">
+      <div class="rounded-xl border border-slate-100 bg-white p-6 shadow-[0px_4px_6px_rgba(0,0,0,0.05)]">
+        <h3 class="mb-6 text-xl font-semibold">Pipeline Velocity</h3>
+        <div class="space-y-6">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="h-10 w-2 rounded-full bg-primary"></div>
+              <div><p class="text-sm font-bold">Proposal Sent</p><p class="text-xs text-slate-500">12 deals this week</p></div>
+            </div>
+            <span class="text-sm font-bold text-slate-900">$45.2k</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="h-10 w-2 rounded-full bg-primary/40"></div>
+              <div><p class="text-sm font-bold">Negotiation</p><p class="text-xs text-slate-500">4 deals this week</p></div>
+            </div>
+            <span class="text-sm font-bold text-slate-900">$128.5k</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="h-10 w-2 rounded-full bg-primary/20"></div>
+              <div><p class="text-sm font-bold">Closed Won</p><p class="text-xs text-slate-500">8 deals this week</p></div>
+            </div>
+            <span class="text-sm font-bold text-slate-900">$92.1k</span>
+          </div>
+        </div>
+        <button class="mt-8 w-full rounded-lg border border-primary/20 py-2 text-xs font-bold text-primary transition-colors hover:bg-primary/5" type="button">View Full Pipeline</button>
+      </div>
+
+      <div class="group relative overflow-hidden rounded-xl bg-slate-900 p-6 text-white">
+        <div class="relative z-10">
+          <h4 class="text-lg font-bold leading-tight">SalesFlow Premium</h4>
+          <p class="mt-2 text-xs leading-relaxed text-slate-400">Get advanced AI forecasting and unlimited team seats with our Pro plan.</p>
+          <button class="mt-4 rounded-lg bg-white px-4 py-2 text-xs font-bold text-slate-900 transition-colors hover:bg-slate-100" type="button">Upgrade Now</button>
+        </div>
+        <div class="absolute -bottom-4 -right-4 h-24 w-24 rounded-full bg-primary/20 blur-2xl transition-all group-hover:bg-primary/40"></div>
+      </div>
+    </div>
+  </div>
+</section>

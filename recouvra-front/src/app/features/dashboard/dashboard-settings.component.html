@@ -1,0 +1,155 @@
+<section class="space-y-8">
+  <div>
+    <h2 class="text-3xl font-bold text-gray-900">Settings</h2>
+    <p class="mt-1 text-sm text-gray-500">Manage profile, display preferences and notifications.</p>
+  </div>
+
+  <section class="flex flex-col items-start justify-between gap-6 rounded-xl border border-gray-100 bg-white p-8 shadow-sm md:flex-row md:items-center">
+    <div class="flex items-center gap-6">
+      <div class="relative">
+        <div class="h-24 w-24 overflow-hidden rounded-full border-4 border-white bg-gray-100 shadow-md">
+          <img alt="CRM Admin Profile" class="h-full w-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBcjxND0Z-gmGVovG0f-MW1fxZLhhnsMM_Mz_rd75cqTkwm2d18x1JtZGkVkcj3PCqcHBO3NN91ECoIESAmf5ao5o1gxj7AMNaA6T44vNl7CIWcy9V4uQOsjQzRB_r9zUDBx1MH6ACjZsAIUJEEgY3YqApxStOXc3E1Yw5Jqc0nnkOXY2-kByGFVzyrL7nU4j7l9Xsa6FnT1RyM06_kcjTASFgny-0msyhGiT_W438QsZRVaZCWUHYLdW0ylTnChRAM8_UxXhZZVHA"/>
+        </div>
+        <button class="absolute bottom-0 right-0 rounded-full border-2 border-white bg-primary p-1.5 text-white shadow-lg" type="button">
+          <span class="material-symbols-outlined text-xs">edit</span>
+        </button>
+      </div>
+
+      <div>
+        <h3 class="text-3xl font-bold text-gray-900">Alex Danvers</h3>
+        <p class="text-gray-500">Senior Accounts Manager • San Francisco, CA</p>
+        <div class="mt-2 flex gap-2">
+          <span class="rounded bg-emerald-50 px-2 py-1 text-[10px] font-bold uppercase text-emerald-700">Pro Account</span>
+          <span class="rounded bg-blue-50 px-2 py-1 text-[10px] font-bold uppercase text-blue-700">Verified</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex gap-3">
+      <button class="rounded-lg border border-gray-200 bg-gray-50 px-4 py-2 font-semibold text-gray-700 transition-all hover:bg-gray-100" type="button">View Public Profile</button>
+      <button class="rounded-lg bg-primary px-4 py-2 font-semibold text-white shadow-sm transition-all hover:opacity-90" type="button">Save Changes</button>
+    </div>
+  </section>
+
+  <div class="grid grid-cols-1 gap-8 md:grid-cols-12">
+    <div class="space-y-8 md:col-span-8">
+      <div class="overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm">
+        <div class="flex items-center justify-between border-b border-gray-50 px-6 py-4">
+          <h4 class="text-xl font-semibold">Profile Settings</h4>
+          <span class="material-symbols-outlined text-gray-300">person</span>
+        </div>
+
+        <div class="grid grid-cols-2 gap-6 p-6">
+          <div class="col-span-2 space-y-1.5 md:col-span-1">
+            <label class="text-xs font-medium uppercase tracking-wider text-gray-500">First Name</label>
+            <input class="w-full rounded-lg border-gray-200 focus:border-primary focus:ring-primary" type="text" value="Alex"/>
+          </div>
+          <div class="col-span-2 space-y-1.5 md:col-span-1">
+            <label class="text-xs font-medium uppercase tracking-wider text-gray-500">Last Name</label>
+            <input class="w-full rounded-lg border-gray-200 focus:border-primary focus:ring-primary" type="text" value="Danvers"/>
+          </div>
+          <div class="col-span-2 space-y-1.5">
+            <label class="text-xs font-medium uppercase tracking-wider text-gray-500">Email Address</label>
+            <input class="w-full rounded-lg border-gray-200 focus:border-primary focus:ring-primary" type="email" value="alex.danvers@crmpro.io"/>
+          </div>
+          <div class="col-span-2 space-y-1.5">
+            <label class="text-xs font-medium uppercase tracking-wider text-gray-500">Professional Bio</label>
+            <textarea class="w-full rounded-lg border-gray-200 focus:border-primary focus:ring-primary" rows="3">Senior Accounts Manager with over 8 years of experience in enterprise relationship building and high-growth SaaS environments.</textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm">
+        <div class="flex items-center justify-between border-b border-gray-50 px-6 py-4">
+          <h4 class="text-xl font-semibold">Display Settings</h4>
+          <span class="material-symbols-outlined text-gray-300">palette</span>
+        </div>
+
+        <div class="space-y-6 p-6">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="font-medium text-gray-900">Interface Theme</p>
+              <p class="text-sm text-gray-500">Choose how the CRM dashboard appears on your screen.</p>
+            </div>
+            <div class="flex rounded-lg bg-gray-100 p-1">
+              <button class="flex items-center gap-2 rounded-md bg-white px-3 py-1.5 text-sm font-medium shadow-sm" type="button">
+                <span class="material-symbols-outlined text-sm">light_mode</span> Light
+              </button>
+              <button class="flex items-center gap-2 rounded-md px-3 py-1.5 text-sm font-medium text-gray-500 hover:text-gray-700" type="button">
+                <span class="material-symbols-outlined text-sm">dark_mode</span> Dark
+              </button>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between border-t border-gray-50 pt-6">
+            <div>
+              <p class="font-medium text-gray-900">Compact Mode</p>
+              <p class="text-sm text-gray-500">Increase data density by reducing vertical padding.</p>
+            </div>
+            <div class="relative inline-flex h-6 w-11 items-center rounded-full bg-emerald-600">
+              <span class="inline-block h-4 w-4 translate-x-6 transform rounded-full bg-white transition"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="space-y-8 md:col-span-4">
+      <div class="overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm">
+        <div class="flex items-center justify-between border-b border-gray-50 px-6 py-4">
+          <h4 class="text-xl font-semibold">Notifications</h4>
+          <span class="material-symbols-outlined text-gray-300">notifications_active</span>
+        </div>
+
+        <div class="space-y-5 p-6">
+          <div class="flex items-start gap-4">
+            <input checked class="mt-1 rounded border-gray-300 text-primary focus:ring-primary" type="checkbox"/>
+            <div>
+              <p class="text-sm font-semibold text-gray-900">Email Alerts</p>
+              <p class="text-xs text-gray-500">Important account updates and lead assignments.</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-4">
+            <input checked class="mt-1 rounded border-gray-300 text-primary focus:ring-primary" type="checkbox"/>
+            <div>
+              <p class="text-sm font-semibold text-gray-900">Push Notifications</p>
+              <p class="text-xs text-gray-500">Real-time alerts via desktop and mobile devices.</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-4">
+            <input class="mt-1 rounded border-gray-300 text-primary focus:ring-primary" type="checkbox"/>
+            <div>
+              <p class="text-sm font-semibold text-gray-900">Monthly Digest</p>
+              <p class="text-xs text-gray-500">Summary reports of your CRM activity and performance.</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-4">
+            <input checked class="mt-1 rounded border-gray-300 text-primary focus:ring-primary" type="checkbox"/>
+            <div>
+              <p class="text-sm font-semibold text-gray-900">Lead Assignments</p>
+              <p class="text-xs text-gray-500">Be notified instantly when a new lead is assigned to you.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-gray-50 px-6 py-4">
+          <button class="text-xs font-bold uppercase tracking-wider text-emerald-600 hover:underline" type="button">Advanced Settings</button>
+        </div>
+      </div>
+
+      <div class="rounded-xl bg-gradient-to-br from-emerald-600 to-emerald-800 p-6 text-white shadow-lg">
+        <div class="mb-4 flex items-center justify-between">
+          <span class="material-symbols-outlined text-3xl">shield_person</span>
+          <span class="rounded bg-emerald-400/20 px-2 py-1 text-[10px] font-bold uppercase">Strong Security</span>
+        </div>
+
+        <h5 class="mb-2 text-xl font-semibold">Two-Factor Auth</h5>
+        <p class="mb-4 text-xs text-emerald-100">Protect your enterprise account with an additional layer of security. We recommend using a mobile authenticator app.</p>
+        <button class="w-full rounded-lg bg-white py-2 text-sm font-bold text-emerald-700 transition-transform active:scale-95" type="button">Manage Security</button>
+      </div>
+    </div>
+  </div>
+</section>
